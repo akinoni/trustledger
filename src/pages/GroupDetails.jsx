@@ -164,23 +164,37 @@ const GroupDetails = () => {
 
             {/* Core Action: Contribution */}
             {members.some(m => m.user_id === user?.id) && (
-              <div className="mb-8 p-6 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg shadow-emerald-500/5">
-                <div>
-                  <h4 className="font-bold text-lg mb-1 flex items-center gap-2 text-emerald-400">
-                    <ShieldCheck className="w-5 h-5" /> Secured Transaction
-                  </h4>
-                  <p className="text-sm text-emerald-500/70">
-                    Your contribution of ₦{group.contribution_amount} will be verified automatically.
-                  </p>
+              group.status === 'disbanded' ? (
+                <div className="mb-8 p-6 bg-red-500/10 border border-red-500/20 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg shadow-red-500/5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center">
+                      <Trash2 className="w-5 h-5 text-red-500" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg mb-0 text-red-400">Circle Disbanded</h4>
+                      <p className="text-sm text-red-500/70">This circle is no longer active and contributions are disabled.</p>
+                    </div>
+                  </div>
                 </div>
-                <button 
-                  onClick={handleContribution}
-                  disabled={contributing}
-                  className="w-full sm:w-auto shrink-0 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold flex items-center justify-center gap-2 rounded-xl transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed group"
-                >
-                  {contributing ? <Loader2 className="w-5 h-5 animate-spin shrink-0" /> : <><Wallet className="w-5 h-5 shrink-0" /> Pay ₦{group.contribution_amount}</>}
-                </button>
-              </div>
+              ) : (
+                <div className="mb-8 p-6 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg shadow-emerald-500/5">
+                  <div>
+                    <h4 className="font-bold text-lg mb-1 flex items-center gap-2 text-emerald-400">
+                      <ShieldCheck className="w-5 h-5" /> Secured Transaction
+                    </h4>
+                    <p className="text-sm text-emerald-500/70">
+                      Your contribution of ₦{group.contribution_amount} will be verified automatically.
+                    </p>
+                  </div>
+                  <button 
+                    onClick={handleContribution}
+                    disabled={contributing}
+                    className="w-full sm:w-auto shrink-0 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold flex items-center justify-center gap-2 rounded-xl transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed group"
+                  >
+                    {contributing ? <Loader2 className="w-5 h-5 animate-spin shrink-0" /> : <><Wallet className="w-5 h-5 shrink-0" /> Pay ₦{group.contribution_amount}</>}
+                  </button>
+                </div>
+              )
             )}
 
             {/* Member Roster */}

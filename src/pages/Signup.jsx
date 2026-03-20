@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Lock, User, ArrowRight, ShieldCheck, Info } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
+import { supabase, BASE_URL } from '../lib/supabase';
 
 const Signup = () => {
   const [fullName, setFullName] = useState('');
@@ -20,7 +20,7 @@ const Signup = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/dashboard`
+          redirectTo: `${BASE_URL}/dashboard`
         }
       });
       if (error) throw error;

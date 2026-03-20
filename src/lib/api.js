@@ -140,7 +140,7 @@ export async function getRecentActivity(userId) {
     // 4. Created Circles & Disbanded Circles
     const { data: createdGroups, error: cgError } = await supabase
       .from('groups')
-      .select('id, name, created_at, status')
+      .select('id, name, created_at, updated_at, status')
       .eq('created_by', userId);
       
     if (cgError) console.error("Error fetching created groups for feed:", cgError);
@@ -159,7 +159,7 @@ export async function getRecentActivity(userId) {
             id: `disband-${g.id}`,
             entry_type: 'disbanded_circle',
             description: `Circle "${g.name}" was officially disbanded.`,
-            created_at: new Date().toISOString()
+            created_at: g.updated_at || g.created_at
           });
         }
       });
