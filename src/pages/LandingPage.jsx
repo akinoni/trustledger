@@ -12,7 +12,7 @@ const LandingPage = () => {
           <div className="w-10 h-10 bg-gradient-premium rounded-xl flex items-center justify-center shadow-lg">
             <ShieldCheck className="text-white w-6 h-6" />
           </div>
-          <span className="text-xl font-bold font-display tracking-tight text-white">TrustLedger</span>
+          <span className="text-xl font-bold font-display tracking-tight text-white">TrustLedger 3MTT</span>
         </div>
         <div className="flex gap-4">
           <Link to="/login" className="px-6 py-2 rounded-full font-medium hover:bg-white/5 transition-all">Login</Link>
@@ -39,7 +39,10 @@ const LandingPage = () => {
               <Link to="/signup" className="flex items-center justify-center gap-2 px-8 py-4 bg-gradient-premium rounded-2xl font-bold text-lg shadow-xl shadow-primary/30 hover:shadow-primary/50 transition-all group">
                 Start a New Circle <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <button className="flex items-center justify-center gap-2 px-8 py-4 glass border border-white/10 rounded-2xl font-bold text-lg hover:bg-white/5 transition-all">
+              <button 
+                onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+                className="flex items-center justify-center gap-2 px-8 py-4 glass border border-white/10 rounded-2xl font-bold text-lg hover:bg-white/5 transition-all"
+              >
                 Learn How it Works
               </button>
             </div>
@@ -111,6 +114,59 @@ const LandingPage = () => {
           </motion.div>
         </div>
       </main>
+
+      {/* How it Works Section */}
+      <section id="how-it-works" className="max-w-7xl mx-auto w-full px-6 py-32 border-t border-white/5">
+        <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold font-display mb-6">How TrustLedger 3MTT Works</h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                A simple, three-step process to secure your community savings and build your financial future.
+            </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+            {/* Step 1 */}
+            <motion.div 
+                whileHover={{ y: -10 }}
+                className="glass p-8 rounded-[32px] border border-white/10 relative overflow-hidden group"
+            >
+                <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center text-primary font-bold text-xl mb-6">1</div>
+                <h4 className="text-2xl font-bold mb-4">Join or Create</h4>
+                <p className="text-gray-400">
+                    Choose a savings circle that fits your goals (amount, frequency, and duration) or start a new one with your trusted peers.
+                </p>
+                <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-primary/10 blur-3xl group-hover:bg-primary/20 transition-all" />
+            </motion.div>
+
+            {/* Step 2 */}
+            <motion.div 
+                whileHover={{ y: -10 }}
+                transition={{ delay: 0.1 }}
+                className="glass p-8 rounded-[32px] border border-white/10 relative overflow-hidden group"
+            >
+                <div className="w-12 h-12 bg-secondary/20 rounded-xl flex items-center justify-center text-secondary font-bold text-xl mb-6">2</div>
+                <h4 className="text-2xl font-bold mb-4">Secure Contribution</h4>
+                <p className="text-gray-400">
+                    Make your scheduled contributions directly from your digital wallet. Each payment is dual-verified by the system and the admin.
+                </p>
+                <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-secondary/10 blur-3xl group-hover:bg-secondary/20 transition-all" />
+            </motion.div>
+
+            {/* Step 3 */}
+            <motion.div 
+                whileHover={{ y: -10 }}
+                transition={{ delay: 0.2 }}
+                className="glass p-8 rounded-[32px] border border-white/10 relative overflow-hidden group"
+            >
+                <div className="w-12 h-12 bg-accent/20 rounded-xl flex items-center justify-center text-accent font-bold text-xl mb-6">3</div>
+                <h4 className="text-2xl font-bold mb-4">Automated Payout</h4>
+                <p className="text-gray-400">
+                    When it's your turn, the full group pot is automatically transferred to your wallet. No delays, no disputes, just pure trust.
+                </p>
+                <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-accent/10 blur-3xl group-hover:bg-accent/20 transition-all" />
+            </motion.div>
+        </div>
+      </section>
 
       {/* Features Grid */}
       <section className="bg-white/2 max-w-7xl mx-auto w-full px-6 py-24 border-t border-white/5">

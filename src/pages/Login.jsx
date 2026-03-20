@@ -66,7 +66,7 @@ const Login = () => {
               <ShieldCheck className="text-white w-8 h-8 group-hover:rotate-12 transition-transform" />
             </Link>
             <h1 className="text-3xl font-bold font-display tracking-tight mb-2">Welcome Back</h1>
-            <p className="text-gray-400">Sign in to your TrustLedger account</p>
+            <p className="text-gray-400">Sign in to your TrustLedger 3MTT account</p>
           </div>
 
           {error && (

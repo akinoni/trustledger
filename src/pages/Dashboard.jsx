@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Wallet, Users, PlusCircle, ArrowUpRight, ArrowDownLeft, ShieldCheck, LogOut, Loader2, Compass, Link2, Check } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { getUserGroups, getRecentActivity, getWalletBalance } from '../lib/api';
+import { getUserGroups, getRecentActivity, getWalletBalance, getUserTrustScore } from '../lib/api';
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -11,6 +11,7 @@ const Dashboard = () => {
   const [groups, setGroups] = useState([]);
   const [activities, setActivities] = useState([]);
   const [walletBalance, setWalletBalance] = useState(0);
+  const [trustScore, setTrustScore] = useState(0);
   const [copiedId, setCopiedId] = useState(null);
   const [inviteCode, setInviteCode] = useState('');
   const navigate = useNavigate();
@@ -33,14 +34,16 @@ const Dashboard = () => {
       setUser(session.user);
       
       try {
-        const [userGroups, userActivities, balance] = await Promise.all([
+        const [userGroups, userActivities, balance, score] = await Promise.all([
           getUserGroups(session.user.id),
           getRecentActivity(session.user.id),
-          getWalletBalance(session.user.id)
+          getWalletBalance(session.user.id),
+          getUserTrustScore(session.user.id)
         ]);
         setGroups(userGroups);
         setActivities(userActivities);
         setWalletBalance(balance);
+        setTrustScore(score);
       } catch (err) {
         console.error("Error fetching dashboard data:", err);
       }
@@ -72,7 +75,7 @@ const Dashboard = () => {
           <div className="w-10 h-10 bg-gradient-premium rounded-xl flex items-center justify-center shadow-lg">
             <ShieldCheck className="text-white w-6 h-6" />
           </div>
-          <span className="text-xl font-bold font-display tracking-tight text-white">TrustLedger</span>
+          <span className="text-xl font-bold font-display tracking-tight text-white">TrustLedger 3MTT</span>
         </div>
         <div className="flex items-center gap-4">
           <div className="hidden sm:block text-right">
@@ -104,8 +107,19 @@ const Dashboard = () => {
             <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/20 blur-[80px] rounded-full pointer-events-none" />
             
             <p className="text-gray-400 text-sm uppercase tracking-widest font-bold mb-2 relative z-10">Wallet Balance</p>
-            <div className="flex items-end gap-4 mb-8 relative z-10">
-              <h2 className="text-5xl font-bold font-display tracking-tight">₦{walletBalance.toLocaleString()}</h2>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 relative z-10">
+              <div>
+                <h2 className="text-5xl font-bold font-display tracking-tight">₦{walletBalance.toLocaleString()}</h2>
+              </div>
+              <div className="bg-white/5 border border-white/10 px-4 py-2 rounded-2xl flex items-center gap-3">
+                <div className="text-right">
+                  <p className="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Trust Score</p>
+                  <p className="text-xl font-bold text-primary">{trustScore}/100</p>
+                </div>
+                <div className="w-10 h-10 rounded-full border-2 border-primary/30 flex items-center justify-center p-1">
+                   <div className="w-full h-full rounded-full bg-primary" style={{ opacity: trustScore / 100 }} />
+                </div>
+              </div>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 relative z-10">
@@ -113,8 +127,14 @@ const Dashboard = () => {
                 <PlusCircle className="w-5 h-5 shrink-0" /> Start Circle
               </Link>
               <Link to="/fund-wallet" className="flex items-center justify-center gap-2 px-6 py-3.5 bg-white/5 border border-white/10 rounded-xl font-bold hover:bg-white/10 transition-all active:scale-95 text-gray-300 w-full sm:w-auto">
-                <Wallet className="w-5 h-5 text-gray-400 shrink-0" /> Fund Wallet
+                <Wallet className="w-5 h-5 text-gray-400 shrink-0" /> Fund
               </Link>
+              <button 
+                onClick={() => alert("Wallet-to-Wallet Transfer UI coming soon! The API is already active.")}
+                className="flex items-center justify-center gap-2 px-6 py-3.5 bg-white/5 border border-white/10 rounded-xl font-bold hover:bg-white/10 transition-all active:scale-95 text-gray-300 w-full sm:w-auto"
+              >
+                <ArrowUpRight className="w-5 h-5 text-gray-400 shrink-0" /> Transfer
+              </button>
             </div>
           </motion.div>
 

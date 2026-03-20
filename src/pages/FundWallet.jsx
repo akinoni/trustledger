@@ -96,7 +96,7 @@ const FundWallet = () => {
               <div>
                 <p className="font-bold mb-1 text-sm">Secure Bank Transfer via Paystack</p>
                 <p className="text-xs text-gray-400">
-                  (Simulated for MVP: Instantly updates your TrustLedger wallet balance).
+                  (Simulated for MVP: Instantly updates your TrustLedger 3MTT wallet balance).
                 </p>
               </div>
             </div>

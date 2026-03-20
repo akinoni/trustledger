@@ -77,7 +77,7 @@ const Signup = () => {
             <Link to="/" className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-premium shadow-lg shadow-secondary/20 mb-6 group hover:scale-105 transition-transform">
               <ShieldCheck className="text-white w-8 h-8 group-hover:rotate-12 transition-transform" />
             </Link>
-            <h1 className="text-3xl font-bold font-display tracking-tight mb-2">Join TrustLedger</h1>
+            <h1 className="text-3xl font-bold font-display tracking-tight mb-2">Join TrustLedger 3MTT</h1>
             <p className="text-gray-400">Create your account to start saving</p>
           </div>
 

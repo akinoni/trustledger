@@ -78,14 +78,14 @@ export async function getRecentActivity(userId) {
       feed.push({
         id: `welcome-${userId}`,
         entry_type: 'welcome',
-        description: 'Welcome to TrustLedger! Your secure savings journey begins.',
+        description: 'Welcome to TrustLedger 3MTT! Your secure savings journey begins.',
         created_at: profile.created_at
       });
     } else {
       feed.push({
         id: `welcome-${userId}`,
         entry_type: 'welcome',
-        description: 'Welcome to TrustLedger! Your secure savings journey begins.',
+        description: 'Welcome to TrustLedger 3MTT! Your secure savings journey begins.',
         created_at: new Date(Date.now() - 86400000).toISOString() // Fake an older timestamp if profile fetch fails
       });
     }
@@ -339,6 +339,51 @@ export async function getActiveProposals(groupId) {
     .eq('status', 'active');
     
   if (error) return [];
+  return data;
+}
+
+/**
+ * Calculates a Trust Score (0-100) based on contribution history.
+ */
+export async function getUserTrustScore(userId) {
+  try {
+    // 1. Get all memberships for this user
+    const { data: memberships } = await supabase
+      .from('memberships')
+      .select('group_id')
+      .eq('user_id', userId);
+
+    if (!memberships || memberships.length === 0) return 0;
+
+    const groupIds = memberships.map(m => m.group_id);
+
+    // 2. Count total contributions
+    const { count: contributionCount } = await supabase
+      .from('ledger_entries')
+      .select('id', { count: 'exact' })
+      .in('group_id', groupIds)
+      .eq('entry_type', 'contribution');
+
+    // Simple heuristic: 10 points per contribution, max 100
+    const score = Math.min(100, (contributionCount || 0) * 10);
+    return score;
+  } catch (err) {
+    console.error("Error calculating trust score:", err);
+    return 0;
+  }
+}
+
+/**
+ * Executes an atomic wallet-to-wallet transfer via RPC.
+ */
+export async function transferFunds(senderId, receiverId, amount) {
+  const { data, error } = await supabase.rpc('transfer_funds', {
+    p_sender_id: senderId,
+    p_receiver_id: receiverId,
+    p_amount: amount
+  });
+  
+  if (error) throw error;
   return data;
 }
 

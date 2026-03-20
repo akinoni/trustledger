@@ -135,7 +135,7 @@ const JoinGroup = () => {
 
           <div className="flex items-center justify-center gap-2 text-sm text-gray-400 mb-8">
             <ShieldCheck className="w-5 h-5 text-accent" />
-            Secured by TrustLedger Dual-Verification
+            Secured by TrustLedger 3MTT Dual-Verification
           </div>
 
           {alreadyMember ? (
